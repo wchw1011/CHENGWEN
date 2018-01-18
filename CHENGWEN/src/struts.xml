@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+   "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" /> 
+	<constant name="struts.i18n.encoding" value="utf-8"></constant>
+	<constant name="struts.multipart.maxSize" value="100000000"/>
+	<constant name="struts.custom.i18n.resources" value="messageResource"/>
+	<package name="model"  extends="struts-default" namespace="/">
+	    
+	    <!-- 手机端action -->
+	    <action name="article" class="articleAction"   >
+			<result name="insertarticlesuccess">/mobile/insertarticlesuccess.jsp</result>
+			<result name="editarticle">/mobile/editarticle.jsp</result>
+			<result name="addarticle" >/mobile/addarticle.jsp</result>
+			<result name="editscanimage">/mobile/editscanimage.jsp</result>
+			<result name="homepage">/mobile/homepage.jsp</result>
+			<result name="prosepage">/mobile/prosepage.jsp</result>
+			<result name="originalpage">/mobile/originalpage.jsp</result>
+			<result name="technologypage">/mobile/technologypage.jsp</result>
+			<result name="articlepage">/mobile/articlepage.jsp</result>
+			<result name="articleimage">/mobile/articleimage.jsp</result>
+		</action>
+		<action name="util" class="utilAction"   >
+			<result name="articleimage">/mobile/articleimage.jsp</result>
+		</action>
+		<action name="articleImage" class="articleImageAction"   >
+			<result name="articleimage">/mobile/articleimage.jsp</result>
+			<result name="test4">/mobile/test4.jsp</result>
+		</action>
+		<action name="scanImage" class="scanImageAction"   >
+			<result name="editscanimage">/mobile/editscanimage.jsp</result>
+			<result name="articleimage">/mobile/articleimage.jsp</result>
+		</action>
+		
+		
+		<!-- PC端action -->
+		<action name="article_pc" class="articleAction"   >
+		    <result name="insertarticlesuccess">/pc/insertarticlesuccess_pc.jsp</result>
+			<result name="editarticle">/pc/editarticle_pc.jsp</result>
+			<result name="addarticle" >/pc/addarticle_pc.jsp</result>
+			<result name="editscanimage">/pc/editscanimage_pc.jsp</result>
+			<result name="homepage">/pc/homepage_pc.jsp</result>
+			<result name="prosepage">/pc/prosepage_pc.jsp</result>
+			<result name="originalpage">/pc/originalpage_pc.jsp</result>
+			<result name="technologypage">/pc/technologypage_pc.jsp</result>
+			<result name="articlepage">/pc/articlepage_pc.jsp</result>
+			<result name="articleimage">/pc/articleimage_pc.jsp</result>
+		</action>
+		
+		
+	</package>
+	    
+	    
+	    
+</struts>

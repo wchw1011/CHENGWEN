@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    	http://www.springframework.org/schema/beans/spring-beans.xsd 
+    	http://www.springframework.org/schema/tx 
+    	http://www.springframework.org/schema/tx/spring-tx.xsd 
+    	http://www.springframework.org/schema/aop 
+    	http://www.springframework.org/schema/aop/spring-aop.xsd ">
+<!-- <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+    "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>-->
+    
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+	    <property name="driverClassName">
+  			<value>com.mysql.jdbc.Driver</value>
+ 		</property>
+ 		<property name="url">
+ 			<value>jdbc:mysql://localhost:3306/CHENGWEN?characterEncoding=utf-8</value> 
+		</property> 
+		<property name="username">
+			<value>root</value>
+		</property>
+		<property name="password">
+			<value></value>
+		</property>
+    </bean>
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"  scope="prototype">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	<bean id="transactinManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="transactinManager">
+		<tx:attributes>
+		    <tx:method name="add*" propagation="REQUIRED" />
+		    <tx:method name="delete*" propagation="REQUIRED" />
+		    <tx:method name="update*" propagation="REQUIRED" />
+		    <tx:method name="add*" propagation="REQUIRED" />
+		 </tx:attributes>
+	</tx:advice> 
+	<aop:config >
+        <aop:pointcut id="allManagerMethod" expression="execution(* com.chengwen.service..*.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" />
+     </aop:config>
+    
+    
+    
+    
+    
+    
+	<bean id="articleDao" class="com.chengwen.dao.ArticleDao" >
+	    <property name="jdbcTemplate"> 
+			<ref bean="jdbcTemplate"/>
+		</property>
+	</bean>  
+	<bean id="articleImageDao" class="com.chengwen.dao.ArticleImageDao" >
+	    <property name="jdbcTemplate"> 
+			<ref bean="jdbcTemplate"/>
+		</property>
+	</bean>  
+	<bean id="articleTypeDao" class="com.chengwen.dao.ArticleTypeDao" >
+	    <property name="jdbcTemplate"> 
+			<ref bean="jdbcTemplate"/>
+		</property>
+	</bean>  
+	
+	<bean id="articleService" class="com.chengwen.service.ArticleService" >
+		<property name="articleDao">
+			<ref bean="articleDao"/>
+		</property>
+		<property name="articleImageDao">
+			<ref bean="articleImageDao"/>
+		</property>
+		<property name="articleTypeDao">
+			<ref bean="articleTypeDao"/>
+		</property>
+	</bean> 
+	<bean id="articleTypeService" class="com.chengwen.service.ArticleTypeService" >
+		<property name="articleTypeDao">
+			<ref bean="articleTypeDao"/>
+		</property>
+	</bean> 
+	
+	<bean name="articleAction" class="com.chengwen.action.ArticleAction" scope="prototype">
+		<property name="articleService">
+			<ref bean="articleService"/>
+		</property>
+		<property name="articleTypeService">
+			<ref bean="articleTypeService"/>
+		</property>
+	</bean>
+	<bean name="utilAction" class="com.chengwen.action.UtilAction" scope="prototype">
+		<property name="articleService">
+			<ref bean="articleService"/> 
+		</property>
+	</bean>
+	<bean name="articleImageAction" class="com.chengwen.action.ArticleImageAction" scope="prototype">
+		<property name="articleService">
+			<ref bean="articleService"/>
+		</property>
+	</bean>
+	<bean name="scanImageAction" class="com.chengwen.action.ScanImageAction" scope="prototype">
+		<property name="articleService">
+			<ref bean="articleService"/>
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+</beans> 
+
